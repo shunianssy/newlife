@@ -1,0 +1,59 @@
+name: Tag Release Deploy
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies 📦
+        run: pnpm install
+
+      - name: Convert Excel to JSON 📊
+        run: pnpm xlsx2json
+
+      - name: Build project 🔧
+        run: pnpm build
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Create artifact archive 📦
+        run: |
+          cd template
+          zip -r ../lifeRestart-${{ steps.get_version.outputs.VERSION }}.zip .
+
+      - name: Upload Release Asset 🚀
+        uses: softprops/action-gh-release@v2
+        with:
+          files: lifeRestart-${{ steps.get_version.outputs.VERSION }}.zip
+          generate_release_notes: true
+
+      - name: Deploy to GitHub Pages 🌐
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: template
+          target-folder: releases/${{ steps.get_version.outputs.VERSION }}
