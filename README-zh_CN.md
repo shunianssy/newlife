@@ -8,6 +8,37 @@
 
 - Game Life Restart
 
+## 文件结构
+
+```
+lifeRestart/
+├── src/                # 源代码目录
+│   ├── @types/         # TypeScript 类型定义
+│   ├── functions/      # 功能函数
+│   ├── i18n/           # 国际化文件
+│   └── ui/             # UI 相关文件
+│       └── themes/     # 主题文件
+├── public/             # 公共资源目录
+│   ├── data/           # 数据文件
+│   ├── fonts/          # 字体文件
+│   ├── images/         # 图片文件
+│   │   ├── accessories/ # 配件图片
+│   │   ├── border/      # 边框图片
+│   │   └── slider/      # 滑块图片
+│   └── libs/           # 库文件
+│       └── laya/       # Laya 引擎相关文件
+├── data/               # 数据目录
+├── laya/               # Laya 引擎相关目录
+│   ├── assets/         # 资源文件
+│   │   └── fonts/      # 字体文件
+│   ├── pages/          # 页面文件
+│   │   └── view/       # 视图文件
+│   └── views/          # 视图目录
+├── template/           # 模板目录
+├── node_modules/       # 依赖包目录
+└── README-zh_CN.md     # 中文说明文档
+```
+
 ## 使用
 
 <details>

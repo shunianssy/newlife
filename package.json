@@ -7,7 +7,8 @@
     "scripts": {
         "xlsx2json": "vt transform -d public \"data/**/*.xlsx\"",
         "dev": "vite",
-        "build": "vite build",
+        "build:vite": "vite build",
+        "build": "node build.js",
         "start": "vite preview",
         "test": "vitest"
     },

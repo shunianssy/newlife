@@ -37,6 +37,12 @@ jobs:
       - name: Build project 🔧
         run: pnpm build
 
+      - name: Verify build output 🧪
+        run: |
+          ls -la template/public
+          ls -la template/public/assets
+          cat template/public/index.html | grep -E "<script crossorigin"
+
       - name: Get version from tag
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
