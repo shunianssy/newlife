@@ -40,9 +40,6 @@ if (fs.existsSync(outDir)) {
 }
 fs.mkdirSync(outDir, { recursive: true });
 
-// 创建 .nojekyll 文件，禁用 GitHub Pages 的 Jekyll 处理
-fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
-
 // 复制必要的文件
 console.log('Copying necessary files...');
 
@@ -96,6 +93,11 @@ if (fs.existsSync(publicDataDir)) {
 // 运行 Vite 构建
 console.log('Building with Vite...');
 execSync('pnpm run build:vite', { stdio: 'inherit' });
+
+// 创建 .nojekyll 文件，禁用 GitHub Pages 的 Jekyll 处理
+// 必须在 Vite 构建之后创建，因为 Vite 会清空输出目录
+fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
+console.log('Created .nojekyll file');
 
 // 修复构建后的 index.html 文件
 console.log('Fixing script tag in index.html...');
