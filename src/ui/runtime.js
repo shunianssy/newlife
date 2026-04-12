@@ -286,6 +286,7 @@ class ColorfulBox extends Laya.Box {
     #hoverStroke = '#ffffff';
     #defaultLabel = '#000000';
     #hoverLabel = '#000000';
+    #isSettingSize = false;
     #color = new runtime.RGBAItem({hex: this.#defaultColor, on: ()=>this.#draw()});
     #stroke = new runtime.RGBAItem({hex: this.#defaultStroke, on: ()=>this.#draw()});
     #label = new runtime.RGBAItem({hex: this.#defaultLabel, on: ({hex})=>{
@@ -377,15 +378,33 @@ class ColorfulBox extends Laya.Box {
         return super.width;
     }
     set width(value) {
-        super.width = value;
-        this.#draw();
+        if (this.#isSettingSize) {
+            super.width = value;
+            return;
+        }
+        this.#isSettingSize = true;
+        try {
+            super.width = value;
+            this.#draw();
+        } finally {
+            this.#isSettingSize = false;
+        }
     }
     get height() {
         return super.height;
     }
     set height(value) {
-        super.height = value;
-        this.#draw();
+        if (this.#isSettingSize) {
+            super.height = value;
+            return;
+        }
+        this.#isSettingSize = true;
+        try {
+            super.height = value;
+            this.#draw();
+        } finally {
+            this.#isSettingSize = false;
+        }
     }
 
     get defaultColor() {
@@ -477,7 +496,6 @@ class ColorfulBox extends Laya.Box {
 
     get cacheAs() {return super.cacheAs;}
     set cacheAs(value) {
-        if(value=='bitmap') debugger;
         super.cacheAs = value;
     }
 
@@ -495,6 +513,7 @@ class BlankBox extends Laya.Box {
     #blank;
     #timeLine;
     #pause = true;
+    #isSettingSize = false;
 
     #draw() {
         this.mask.graphics.clear();
@@ -528,17 +547,35 @@ class BlankBox extends Laya.Box {
         return super.width;
     }
     set width(value) {
-        super.width = value;
-        this.#blank.x = -this.width;
-        this.#draw();
+        if (this.#isSettingSize) {
+            super.width = value;
+            return;
+        }
+        this.#isSettingSize = true;
+        try {
+            super.width = value;
+            this.#blank.x = -this.width;
+            this.#draw();
+        } finally {
+            this.#isSettingSize = false;
+        }
     }
 
     get height() {
         return super.height;
     }
     set height(value) {
-        super.height = value;
-        this.#draw();
+        if (this.#isSettingSize) {
+            super.height = value;
+            return;
+        }
+        this.#isSettingSize = true;
+        try {
+            super.height = value;
+            this.#draw();
+        } finally {
+            this.#isSettingSize = false;
+        }
     }
 }
 

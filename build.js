@@ -1,6 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+
+// ES 模块中获取 __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 定义路径
 const projectRoot = __dirname;
@@ -12,6 +17,21 @@ const fontsDir = path.join(projectRoot, 'fonts');
 const dataDir = path.join(projectRoot, 'data');
 const particleDir = path.join(projectRoot, 'particle');
 const viewDir = path.join(projectRoot, 'view');
+
+// 辅助函数：复制目录
+function copyDirectory(src, dest) {
+    const files = fs.readdirSync(src);
+    for (const file of files) {
+        const srcPath = path.join(src, file);
+        const destPath = path.join(dest, file);
+        if (fs.statSync(srcPath).isDirectory()) {
+            fs.mkdirSync(destPath, { recursive: true });
+            copyDirectory(srcPath, destPath);
+        } else {
+            fs.copyFileSync(srcPath, destPath);
+        }
+    }
+}
 
 // 清空输出目录
 console.log('Clearing output directory...');
@@ -88,18 +108,3 @@ if (fs.existsSync(htmlPath)) {
 }
 
 console.log('Build completed successfully!');
-
-// 辅助函数：复制目录
-function copyDirectory(src, dest) {
-    const files = fs.readdirSync(src);
-    for (const file of files) {
-        const srcPath = path.join(src, file);
-        const destPath = path.join(dest, file);
-        if (fs.statSync(srcPath).isDirectory()) {
-            fs.mkdirSync(destPath, { recursive: true });
-            copyDirectory(srcPath, destPath);
-        } else {
-            fs.copyFileSync(srcPath, destPath);
-        }
-    }
-}
