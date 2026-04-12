@@ -90,9 +90,10 @@ if (fs.existsSync(publicDataDir)) {
     copyDirectory(publicDataDir, destDataDir);
 }
 
-// 运行 Vite 构建
+// 运行 Vite 构建（设置 NODE_ENV=production 以启用 GitHub Pages 子路径）
 console.log('Building with Vite...');
-execSync('pnpm run build:vite', { stdio: 'inherit' });
+process.env.NODE_ENV = 'production';
+execSync('pnpm run build:vite', { stdio: 'inherit', env: { ...process.env, NODE_ENV: 'production' } });
 
 // 创建 .nojekyll 文件，禁用 GitHub Pages 的 Jekyll 处理
 // 必须在 Vite 构建之后创建，因为 Vite 会清空输出目录
