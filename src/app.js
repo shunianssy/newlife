@@ -80,6 +80,11 @@ class App {
         Laya.class(CharSegment, 'laya.webgl.text.CharSegment');
         Laya.imps(CharSegment.prototype, { "laya.webgl.text.ICharSegment": true })
 
+        // 设置资源基础路径，支持 GitHub Pages 子路径部署
+        if (window.location.pathname !== '/' && !window.location.pathname.endsWith('/')) {
+            const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+            Laya.URL.basePath = basePath;
+        }
 
         // Laya.init(1125, 2436, Laya.WebGL);
         Laya.Config.isAntialias = true;
