@@ -26,4 +26,4 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: template # The folder the action should deploy.
+          folder: template/public # The folder the action should deploy.

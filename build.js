@@ -40,6 +40,9 @@ if (fs.existsSync(outDir)) {
 }
 fs.mkdirSync(outDir, { recursive: true });
 
+// 创建 .nojekyll 文件，禁用 GitHub Pages 的 Jekyll 处理
+fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
+
 // 复制必要的文件
 console.log('Copying necessary files...');
 
