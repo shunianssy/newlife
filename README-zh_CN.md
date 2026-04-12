@@ -47,7 +47,7 @@ lifeRestart/
 
 ```bash
 # 1. 下载项目代码
-git clone https://github.com/VickScarlet/lifeRestart.git my-project
+git clone https://github.com/shunianssy/newlife.git my-project
 
 # 2. 进入目录安装依赖
 cd my-project
